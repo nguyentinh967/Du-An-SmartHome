@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home Control</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const DeviceControl = () => {
+      const [lights, setLights] = useState(false);
+      const [temperature, setTemperature] = useState(22);
+      const [fan, setFan] = useState(false);
+
+      const toggleLights = () => setLights(!lights);
+      const adjustTemperature = (e) => setTemperature(parseInt(e.target.value));
+      const toggleFan = () => setFan(!fan);
+
+      return (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">Smart Home Control</h1>
+
+            {/* Lights Control */}
+            <div className="mb-4">
+              <h2 className="text-lg font-semibold mb-2">Lights</h2>
+              <button
+                onClick={toggleLights}
+                className={`w-full py-2 rounded ${lights ? 'bg-red-500' : 'bg-green-500'} text-white`}
+              >
+                {lights ? 'Turn Off' : 'Turn On'}
+              </button>
+              <p className="mt-2 text-gray-600">Status: {lights ? 'On' : 'Off'}</p>
+            </div>
+
+            {/* Temperature Control */}
+            <div className="mb-4">
+              <h2 className="text-lg font-semibold mb-2">Temperature</h2>
+              <input
+                type="range"
+                min="18"
+                max="30"
+                value={temperature}
+                onChange={adjustTemperature}
+                className="w-full"
+              />
+              <p className="mt-2 text-gray-600">Temperature: {temperature}°C</p>
+            </div>
+
+            {/* Fan Control */}
+            <div className="mb-4">
+              <h2 className="text-lg font-semibold mb-2">Fan</h2>
+              <button
+                onClick={toggleFan}
+                className={`w-full py-2 rounded ${fan ? 'bg-red-500' : 'bg-green-500'} text-white`}
+              >
+                {fan ? 'Turn Off' : 'Turn On'}
+              </button>
+              <p className="mt-2 text-gray-600">Status: {fan ? 'On' : 'Off'}</p>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<DeviceControl />, document.getElementById('root'));
+  </script>
+</body>
+</html>
